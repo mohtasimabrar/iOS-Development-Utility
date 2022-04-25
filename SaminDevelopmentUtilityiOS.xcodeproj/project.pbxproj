@@ -16,6 +16,9 @@
 		CE501D39281170F2003705AB /* SaminDevelopmentUtilityiOSTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE501D38281170F2003705AB /* SaminDevelopmentUtilityiOSTests.swift */; };
 		CE501D43281170F2003705AB /* SaminDevelopmentUtilityiOSUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE501D42281170F2003705AB /* SaminDevelopmentUtilityiOSUITests.swift */; };
 		CE501D45281170F2003705AB /* SaminDevelopmentUtilityiOSUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE501D44281170F2003705AB /* SaminDevelopmentUtilityiOSUITestsLaunchTests.swift */; };
+		CED20AF92816A163007B3602 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = CED20AF82816A163007B3602 /* FirebaseAnalytics */; };
+		CED20AFB2816A163007B3602 /* FirebaseMessaging in Frameworks */ = {isa = PBXBuildFile; productRef = CED20AFA2816A163007B3602 /* FirebaseMessaging */; };
+		CED20AFE2816A212007B3602 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = CED20AFD2816A212007B3602 /* GoogleService-Info.plist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -49,6 +52,8 @@
 		CE501D3E281170F2003705AB /* SaminDevelopmentUtilityiOSUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SaminDevelopmentUtilityiOSUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		CE501D42281170F2003705AB /* SaminDevelopmentUtilityiOSUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SaminDevelopmentUtilityiOSUITests.swift; sourceTree = "<group>"; };
 		CE501D44281170F2003705AB /* SaminDevelopmentUtilityiOSUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SaminDevelopmentUtilityiOSUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		CED20AFD2816A212007B3602 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		CED20AFF2816A474007B3602 /* SaminDevelopmentUtilityiOS.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = SaminDevelopmentUtilityiOS.entitlements; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -56,6 +61,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CED20AFB2816A163007B3602 /* FirebaseMessaging in Frameworks */,
+				CED20AF92816A163007B3602 /* FirebaseAnalytics in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -99,13 +106,15 @@
 		CE501D20281170F0003705AB /* SaminDevelopmentUtilityiOS */ = {
 			isa = PBXGroup;
 			children = (
+				CED20AFF2816A474007B3602 /* SaminDevelopmentUtilityiOS.entitlements */,
 				CE501D21281170F0003705AB /* AppDelegate.swift */,
+				CED20AFD2816A212007B3602 /* GoogleService-Info.plist */,
+				CE501D2A281170F2003705AB /* Assets.xcassets */,
+				CE501D2F281170F2003705AB /* Info.plist */,
 				CE501D23281170F0003705AB /* SceneDelegate.swift */,
 				CE501D25281170F0003705AB /* ViewController.swift */,
-				CE501D27281170F0003705AB /* Main.storyboard */,
-				CE501D2A281170F2003705AB /* Assets.xcassets */,
 				CE501D2C281170F2003705AB /* LaunchScreen.storyboard */,
-				CE501D2F281170F2003705AB /* Info.plist */,
+				CE501D27281170F0003705AB /* Main.storyboard */,
 			);
 			path = SaminDevelopmentUtilityiOS;
 			sourceTree = "<group>";
@@ -143,6 +152,10 @@
 			dependencies = (
 			);
 			name = SaminDevelopmentUtilityiOS;
+			packageProductDependencies = (
+				CED20AF82816A163007B3602 /* FirebaseAnalytics */,
+				CED20AFA2816A163007B3602 /* FirebaseMessaging */,
+			);
 			productName = SaminDevelopmentUtilityiOS;
 			productReference = CE501D1E281170F0003705AB /* SaminDevelopmentUtilityiOS.app */;
 			productType = "com.apple.product-type.application";
@@ -215,6 +228,9 @@
 				Base,
 			);
 			mainGroup = CE501D15281170F0003705AB;
+			packageReferences = (
+				CED20AF72816A163007B3602 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+			);
 			productRefGroup = CE501D1F281170F0003705AB /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -232,6 +248,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				CE501D2E281170F2003705AB /* LaunchScreen.storyboard in Resources */,
+				CED20AFE2816A212007B3602 /* GoogleService-Info.plist in Resources */,
 				CE501D2B281170F2003705AB /* Assets.xcassets in Resources */,
 				CE501D29281170F0003705AB /* Main.storyboard in Resources */,
 			);
@@ -435,6 +452,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = SaminDevelopmentUtilityiOS/SaminDevelopmentUtilityiOS.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
@@ -465,6 +483,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = SaminDevelopmentUtilityiOS/SaminDevelopmentUtilityiOS.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
@@ -602,6 +621,30 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		CED20AF72816A163007B3602 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 8.0.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		CED20AF82816A163007B3602 /* FirebaseAnalytics */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = CED20AF72816A163007B3602 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAnalytics;
+		};
+		CED20AFA2816A163007B3602 /* FirebaseMessaging */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = CED20AF72816A163007B3602 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseMessaging;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = CE501D16281170F0003705AB /* Project object */;
 }

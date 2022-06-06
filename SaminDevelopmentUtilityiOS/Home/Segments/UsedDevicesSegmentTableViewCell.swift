@@ -1,5 +1,5 @@
 //
-//  RoomsSegmentTableViewCell.swift
+//  UsedDevicesSegmentTableViewCell.swift
 //  SaminDevelopmentUtilityiOS
 //
 //  Created by Mohtasim Abrar Samin on 25/5/22.
@@ -7,22 +7,22 @@
 
 import UIKit
 
-class RoomsSegmentTableViewCell: UITableViewCell {
+class UsedDevicesSegmentTableViewCell: UITableViewCell {
 
-    static let identifier = "RoomsSegmentCell"
+    static let identifier = "UsedRoomsSegmentCell"
     
-    let routines = [("Living Room","house", "23° C", "74%"), ("Bedroom","house", "26° C", "67%"), ("Guest Room","house", "28° C", "75%")]
+    let routines = [("Living Room Air Conditioner","wind.snow", "23° C", "74%"), ("Bedroom Smooth Lights","lightbulb", "26° C", "67%"), ("Living Room Television","tv", "28° C", "75%")]
 
     var bannerView: UIView = {
         $0.translatesAutoresizingMaskIntoConstraints = false
         
         return $0
-    }(SegmentBannerView(title: "Rooms"))
+    }(SegmentBannerView(title: "Recently used devices"))
     
     lazy var collectionView: UICollectionView = {
         $0.delegate = self
         $0.dataSource = self
-        $0.register(RoutinesSegmentCollectionViewCell.self, forCellWithReuseIdentifier: RoutinesSegmentCollectionViewCell.identifier)
+        $0.register(UsedDevicesSegmentCollectionViewCell.self, forCellWithReuseIdentifier: UsedDevicesSegmentCollectionViewCell.identifier)
         $0.backgroundColor = .clear
         $0.showsHorizontalScrollIndicator = false
         $0.translatesAutoresizingMaskIntoConstraints = false
@@ -79,10 +79,10 @@ class RoomsSegmentTableViewCell: UITableViewCell {
 }
 
 
-extension RoomsSegmentTableViewCell: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+extension UsedDevicesSegmentTableViewCell: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: RoutinesSegmentCollectionViewCell.identifier, for: indexPath) as? RoutinesSegmentCollectionViewCell else {
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: UsedDevicesSegmentCollectionViewCell.identifier, for: indexPath) as? UsedDevicesSegmentCollectionViewCell else {
             return UICollectionViewCell()
         }
         cell.configure(title: routines[indexPath.row].0, icon: routines[indexPath.row].1)
@@ -98,10 +98,8 @@ extension RoomsSegmentTableViewCell: UICollectionViewDelegate, UICollectionViewD
         return 1
     }
 
-    func collectionView(_ collectionView: UICollectionView,
-                        layout collectionViewLayout: UICollectionViewLayout,
-                        sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: 250, height: 100)
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return CGSize(width: 150, height: 100)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {

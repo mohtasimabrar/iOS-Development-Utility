@@ -13,7 +13,7 @@ class SingleDataViewWithSubtitle: UIView {
         $0.translatesAutoresizingMaskIntoConstraints = false
         $0.textAlignment = .center
         $0.font = .systemFont(ofSize: 25, weight: .semibold)
-        $0.textColor = .darkGray
+        $0.textColor = UIColor(hex: "#5b4684")
         
         return $0
     }(UILabel())
@@ -21,7 +21,7 @@ class SingleDataViewWithSubtitle: UIView {
         $0.translatesAutoresizingMaskIntoConstraints = false
         $0.textAlignment = .center
         $0.numberOfLines = 0
-        $0.textColor = .lightGray
+        $0.textColor = UIColor.systemGray
         $0.font = .systemFont(ofSize: 15, weight: .light)
         
         return $0

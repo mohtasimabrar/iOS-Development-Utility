@@ -26,6 +26,8 @@ class HomeViewController: UIViewController {
         $0.delegate = self
         $0.dataSource = self
         $0.translatesAutoresizingMaskIntoConstraints = false
+        $0.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 10, right: 0)
+        $0.showsVerticalScrollIndicator = false
         
         return $0
     }(UITableView())
@@ -39,13 +41,25 @@ class HomeViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.navigationController?.isNavigationBarHidden = true
+        self.navigationController?.setNavigationBarHidden(true, animated: true)
+        
+        navigationController?.navigationBar.standardAppearance.setBackIndicatorImage(UIImage(systemName: "arrow.left")!.withAlignmentRectInsets(.init(top: 0, left: -10, bottom: 0, right: 0)), transitionMaskImage: UIImage(systemName: "arrow.left")!.withAlignmentRectInsets(.init(top: 0, left: -10, bottom: 0, right: 0)))
+        navigationController?.navigationBar.tintColor = UIColor.systemGray
+        navigationItem.backButtonTitle = ""
+        
+        RoomsSegmentTableViewCell.delegate = self
         
         view.addSubview(profileNavBar)
         view.addSubview(tableView)
         
         addConstraints()
         assignbackground()
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        self.navigationController?.setNavigationBarHidden(true, animated: false)
     }
     
     func assignbackground(){
@@ -63,12 +77,12 @@ class HomeViewController: UIViewController {
     
     func addConstraints() {
         NSLayoutConstraint.activate([
-            profileNavBar.topAnchor.constraint(equalTo: view.topAnchor, constant: 50),
+            profileNavBar.topAnchor.constraint(equalTo: view.topAnchor, constant: 45),
             profileNavBar.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 30),
             profileNavBar.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -30),
             profileNavBar.heightAnchor.constraint(equalToConstant: 50),
             
-            tableView.topAnchor.constraint(equalTo: profileNavBar.bottomAnchor, constant: 5),
+            tableView.topAnchor.constraint(equalTo: profileNavBar.bottomAnchor, constant: -5),
             tableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
             tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor)
@@ -131,5 +145,14 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return HomeViewSections.allCases.count
+    }
+}
+
+extension HomeViewController: RoomsSegmentTableViewCellDelegate {
+    
+    func didSelectItem() {
+        let vc = RoomViewController()
+        vc.hidesBottomBarWhenPushed = true
+        self.navigationController?.pushViewController(vc, animated: true)
     }
 }

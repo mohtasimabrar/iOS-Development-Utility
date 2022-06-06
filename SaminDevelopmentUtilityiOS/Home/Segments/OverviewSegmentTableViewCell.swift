@@ -99,9 +99,9 @@ class OverviewSegmentTableViewCell: UITableViewCell {
         shadowView.clipsToBounds = false
         shadowView.layer.masksToBounds = false
         shadowView.layer.shadowColor = UIColor.black.cgColor
-        shadowView.layer.shadowOpacity = 0.2
+        shadowView.layer.shadowOpacity = 0.1
         shadowView.layer.shadowOffset = .zero
-        shadowView.layer.shadowRadius = 10
+        shadowView.layer.shadowRadius = 5
         shadowView.layer.shouldRasterize = true
         shadowView.layer.rasterizationScale = UIScreen.main.scale
     }

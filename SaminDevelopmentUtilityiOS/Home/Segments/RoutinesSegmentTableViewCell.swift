@@ -1,5 +1,5 @@
 //
-//  UsedDevicesSegmentTableViewCell.swift
+//  RoutinesSegmentTableViewCell.swift
 //  SaminDevelopmentUtilityiOS
 //
 //  Created by Mohtasim Abrar Samin on 25/5/22.
@@ -7,17 +7,17 @@
 
 import UIKit
 
-class UsedDevicesSegmentTableViewCell: UITableViewCell {
-
-    static let identifier = "UsedRoomsSegmentCell"
+class RoutinesSegmentTableViewCell: UITableViewCell {
     
-    let routines = [("Living Room AC","wind.snow", "23° C", "74%"), ("Bedroom Lights","lightbulb", "26° C", "67%"), ("Living Room TV","tv", "28° C", "75%")]
+    static let identifier = "RoutinesSegmentCell"
+    
+    let routines = [("Morning","sun.haze.fill"), ("I'm Out","checkmark.shield.fill"), ("Back Home","house.fill"), ("At Work","desktopcomputer")]
 
     var bannerView: UIView = {
         $0.translatesAutoresizingMaskIntoConstraints = false
         
         return $0
-    }(SegmentBannerView(title: "Recently used devices"))
+    }(SegmentBannerView(title: "Routines"))
     
     lazy var collectionView: UICollectionView = {
         $0.delegate = self
@@ -38,9 +38,7 @@ class UsedDevicesSegmentTableViewCell: UITableViewCell {
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        
-        collectionView.delegate = self
-        collectionView.dataSource = self
+
         self.backgroundColor = .clear
         
         containerView.addSubview(bannerView)
@@ -51,6 +49,9 @@ class UsedDevicesSegmentTableViewCell: UITableViewCell {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
         collectionView.collectionViewLayout = layout
+        DispatchQueue.main.async {
+            self.collectionView.selectItem(at: NSIndexPath(item: 0, section: 0) as IndexPath, animated: false, scrollPosition: [])
+        }
         
         NSLayoutConstraint.activate([
             containerView.topAnchor.constraint(equalTo: self.contentView.topAnchor),
@@ -79,7 +80,7 @@ class UsedDevicesSegmentTableViewCell: UITableViewCell {
 }
 
 
-extension UsedDevicesSegmentTableViewCell: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+extension RoutinesSegmentTableViewCell: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: RoutinesSegmentCollectionViewCell.identifier, for: indexPath) as? RoutinesSegmentCollectionViewCell else {
@@ -101,7 +102,7 @@ extension UsedDevicesSegmentTableViewCell: UICollectionViewDelegate, UICollectio
     func collectionView(_ collectionView: UICollectionView,
                         layout collectionViewLayout: UICollectionViewLayout,
                         sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: 150, height: 100)
+        return CGSize(width: 120, height: 100)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {

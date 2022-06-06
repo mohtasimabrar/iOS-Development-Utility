@@ -1,21 +1,22 @@
 //
-//  RoutinesSegmentCollectionViewCell.swift
+//  UsedDevicesSegmentCollectionViewCell.swift
 //  SaminDevelopmentUtilityiOS
 //
-//  Created by Mohtasim Abrar Samin on 25/5/22.
+//  Created by Mohtasim Abrar Samin on 26/5/22.
 //
 
 import UIKit
 
-class RoutinesSegmentCollectionViewCell: UICollectionViewCell {
+class UsedDevicesSegmentCollectionViewCell: UICollectionViewCell {
     
-    static let identifier = "RoutinesSegmentCollectionViewCell"
+    static let identifier = "UsedDevicesSegmentCollectionViewCell"
     
     var titleLabel: UILabel = {
         $0.textColor = .darkGray
         $0.font = .systemFont(ofSize: 14, weight: .medium)
         $0.text = "Placeholder"
-        $0.textAlignment = .center
+        $0.textAlignment = .left
+        $0.numberOfLines = 0
         $0.translatesAutoresizingMaskIntoConstraints = false
         
         return $0
@@ -24,6 +25,7 @@ class RoutinesSegmentCollectionViewCell: UICollectionViewCell {
     var iconImageView: UIImageView = {
         $0.image = UIImage(systemName: "photo")
         $0.translatesAutoresizingMaskIntoConstraints = false
+        $0.contentMode = .scaleAspectFit
         
         return $0
     }(UIImageView())
@@ -39,23 +41,7 @@ class RoutinesSegmentCollectionViewCell: UICollectionViewCell {
         
         return $0
     }(UIView())
-    
-    lazy var gradientLayer: CAGradientLayer = {
-        $0.frame = containerView.bounds
-        $0.colors = [UIColor(hex: "8658BB").cgColor, UIColor(hex: "FA8EAE").cgColor]
-        $0.startPoint = CGPoint(x: 0, y: 0)
-        $0.endPoint = CGPoint(x: 1, y: 1)
         
-        return $0
-    }(CAGradientLayer())
-    
-    override var isSelected: Bool {
-        didSet {
-            isSelected ? self.containerView.layer.insertSublayer(gradientLayer, at: 0) : containerView.layer.sublayers?.filter{ $0 is CAGradientLayer }.forEach{ $0.removeFromSuperlayer() }
-            self.iconImageView.tintColor = isSelected ? .white : UIColor(hex: "6B78B9")
-            self.titleLabel.textColor = isSelected ? .white : .darkGray
-        }
-    }
     
     override init(frame: CGRect) {
         super.init(frame: .zero)
@@ -78,14 +64,14 @@ class RoutinesSegmentCollectionViewCell: UICollectionViewCell {
             containerView.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor),
             containerView.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor),
             
-            iconImageView.topAnchor.constraint(equalTo: self.contentView.topAnchor, constant: 20),
-            iconImageView.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
+            iconImageView.topAnchor.constraint(equalTo: containerView.topAnchor, constant: 15),
+            iconImageView.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 10),
             iconImageView.heightAnchor.constraint(equalToConstant: 30),
             iconImageView.widthAnchor.constraint(equalToConstant: 31),
             
-            titleLabel.topAnchor.constraint(equalTo: iconImageView.bottomAnchor),
-            titleLabel.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor, constant: 20),
-            titleLabel.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor, constant: -20),
+            titleLabel.topAnchor.constraint(equalTo: iconImageView.bottomAnchor, constant: 5),
+            titleLabel.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 10),
+            titleLabel.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -10),
             titleLabel.heightAnchor.constraint(equalToConstant: 40)
         ])
     }
@@ -102,7 +88,7 @@ class RoutinesSegmentCollectionViewCell: UICollectionViewCell {
         
         shadowView.clipsToBounds = false
         shadowView.layer.masksToBounds = false
-        shadowView.layer.shadowColor = UIColor.darkGray.cgColor
+        shadowView.layer.shadowColor = UIColor.black.cgColor
         shadowView.layer.shadowOpacity = 0.1
         shadowView.layer.shadowOffset = .zero
         shadowView.layer.shadowRadius = 5
@@ -112,31 +98,5 @@ class RoutinesSegmentCollectionViewCell: UICollectionViewCell {
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
-    }
-}
-
-extension UIColor {
-    convenience init(hex string: String) {
-        var hex = string.hasPrefix("#") ? String(string.dropFirst()) : string
-        guard hex.count == 3 || hex.count == 6
-        else {
-            self.init(white: 1.0, alpha: 0.0)
-            return
-        }
-        if hex.count == 3 {
-            for (index, char) in hex.enumerated() {
-                hex.insert(char, at: hex.index(hex.startIndex, offsetBy: index * 2))
-            }
-        }
-        
-        guard let intCode = Int(hex, radix: 16) else {
-            self.init(white: 1.0, alpha: 0.0)
-            return
-        }
-        
-        self.init(
-            red:   CGFloat((intCode >> 16) & 0xFF) / 255.0,
-            green: CGFloat((intCode >> 8) & 0xFF) / 255.0,
-            blue:  CGFloat((intCode) & 0xFF) / 255.0, alpha: 1.0)
     }
 }

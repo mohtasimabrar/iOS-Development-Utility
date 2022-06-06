@@ -33,7 +33,7 @@ class MainTabbarController: UITabBarController {
         if #available(iOS 15.0, *) {
             let appearance = UITabBarAppearance()
             appearance.configureWithOpaqueBackground()
-            appearance.backgroundColor = .white
+            appearance.backgroundColor = UIColor(hex: "#fbfdff")
             self.tabBar.standardAppearance = appearance
             self.tabBar.scrollEdgeAppearance = appearance
         }
@@ -41,6 +41,8 @@ class MainTabbarController: UITabBarController {
     
 }
 
+
+//MARK: Tabbar View Controllers
 class DataViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()

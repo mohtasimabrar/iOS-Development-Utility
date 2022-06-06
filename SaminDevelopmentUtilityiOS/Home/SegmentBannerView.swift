@@ -18,7 +18,7 @@ class SegmentBannerView: UIView {
     
     var button: UIButton = {
         $0.setTitle("View all", for: .normal)
-        $0.setTitleColor(.lightGray, for: .normal)
+        $0.setTitleColor(UIColor.systemGray, for: .normal)
         $0.titleLabel?.font = .systemFont(ofSize: 14, weight: .regular)
         $0.contentHorizontalAlignment = .right
         

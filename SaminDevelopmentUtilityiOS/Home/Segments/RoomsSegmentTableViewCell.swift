@@ -1,5 +1,5 @@
 //
-//  RoutinesSegmentTableViewCell.swift
+//  RoomsSegmentTableViewCell.swift
 //  SaminDevelopmentUtilityiOS
 //
 //  Created by Mohtasim Abrar Samin on 25/5/22.
@@ -7,22 +7,28 @@
 
 import UIKit
 
-class RoutinesSegmentTableViewCell: UITableViewCell {
+protocol RoomsSegmentTableViewCellDelegate: AnyObject {
+    func didSelectItem()
+}
+
+class RoomsSegmentTableViewCell: UITableViewCell {
+
+    static let identifier = "RoomsSegmentCell"
     
-    static let identifier = "RoutinesSegmentCell"
+    static weak var delegate: RoomsSegmentTableViewCellDelegate?
     
-    let routines = [("Morning","sun.haze.fill"), ("I'm Out","checkmark.shield.fill"), ("Back Home","house.fill"), ("At Work","desktopcomputer")]
+    let routines = [("Living Room","house.fill", "23° C", "74%"), ("Bedroom","bed.double.fill", "26° C", "67%"), ("Guest Room","person.2.fill", "28° C", "75%")]
 
     var bannerView: UIView = {
         $0.translatesAutoresizingMaskIntoConstraints = false
         
         return $0
-    }(SegmentBannerView(title: "Routines"))
+    }(SegmentBannerView(title: "Rooms"))
     
     lazy var collectionView: UICollectionView = {
         $0.delegate = self
         $0.dataSource = self
-        $0.register(RoutinesSegmentCollectionViewCell.self, forCellWithReuseIdentifier: RoutinesSegmentCollectionViewCell.identifier)
+        $0.register(RoomsSegmentCollectionViewCell.self, forCellWithReuseIdentifier: RoomsSegmentCollectionViewCell.identifier)
         $0.backgroundColor = .clear
         $0.showsHorizontalScrollIndicator = false
         $0.translatesAutoresizingMaskIntoConstraints = false
@@ -65,7 +71,7 @@ class RoutinesSegmentTableViewCell: UITableViewCell {
             
             collectionView.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor),
             collectionView.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor),
-            collectionView.topAnchor.constraint(equalTo: bannerView.bottomAnchor),
+            collectionView.topAnchor.constraint(equalTo: bannerView.bottomAnchor, constant: -10),
             collectionView.heightAnchor.constraint(equalToConstant: 120),
             collectionView.bottomAnchor.constraint(equalTo: containerView.bottomAnchor)
             
@@ -79,13 +85,13 @@ class RoutinesSegmentTableViewCell: UITableViewCell {
 }
 
 
-extension RoutinesSegmentTableViewCell: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+extension RoomsSegmentTableViewCell: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: RoutinesSegmentCollectionViewCell.identifier, for: indexPath) as? RoutinesSegmentCollectionViewCell else {
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: RoomsSegmentCollectionViewCell.identifier, for: indexPath) as? RoomsSegmentCollectionViewCell else {
             return UICollectionViewCell()
         }
-        cell.configure(title: routines[indexPath.row].0, icon: routines[indexPath.row].1)
+        cell.configure(title: routines[indexPath.row].0, icon: routines[indexPath.row].1, temp: routines[indexPath.row].2, hum: routines[indexPath.row].3)
         
         return cell
     }
@@ -101,7 +107,7 @@ extension RoutinesSegmentTableViewCell: UICollectionViewDelegate, UICollectionVi
     func collectionView(_ collectionView: UICollectionView,
                         layout collectionViewLayout: UICollectionViewLayout,
                         sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: 120, height: 100)
+        return CGSize(width: 200, height: 80)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
@@ -110,5 +116,9 @@ extension RoutinesSegmentTableViewCell: UICollectionViewDelegate, UICollectionVi
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
         return 15
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        RoomsSegmentTableViewCell.delegate?.didSelectItem()
     }
 }

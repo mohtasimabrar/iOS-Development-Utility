@@ -33,12 +33,19 @@ class CustomSliderViewWithSteps: UIView {
     
     lazy var slider: UISlider = {
         $0.translatesAutoresizingMaskIntoConstraints = false
-        $0.minimumValue = 0
-        $0.maximumValue = 100
-        $0.value = 50
-        $0.tintColor = UIColor(hex: "6B78B9")
-        $0.addTarget(self, action: #selector(sliderValueDidChange(_ :)), for: .valueChanged)
-        $0.isContinuous = false
+        $0.minimumValue = 1
+        $0.maximumValue = 3
+        $0.value = 2
+        $0.addTarget(self, action: #selector(sliderValueDidChange(slider: event:)), for: .valueChanged)
+        $0.maximumTrackTintColor = .systemGray5
+        $0.minimumTrackTintColor = UIColor(hex: "#f088c7")
+        $0.thumbTintColor = UIColor(hex: "6B78B9")
+        $0.setThumbImage(UIImage(named: "sliderThumbImage"), for: .normal)
+        $0.setThumbImage(UIImage(named: "sliderThumbImage"), for: .application)
+        $0.setThumbImage(UIImage(named: "sliderThumbImage"), for: .focused)
+        $0.setThumbImage(UIImage(named: "sliderThumbImage"), for: .selected)
+        $0.setThumbImage(UIImage(named: "sliderThumbImage"), for: .highlighted)
+        $0.isContinuous = true
         
         return $0
     }(UISlider())
@@ -76,13 +83,41 @@ class CustomSliderViewWithSteps: UIView {
         
         return $0
     }(UIStackView())
+    
+    lazy var lowerBoundCircle: UIView = {
+        $0.translatesAutoresizingMaskIntoConstraints = false
+        $0.backgroundColor = UIColor(hex: "#f088c7")
+        $0.clipsToBounds = true
+        $0.layer.cornerRadius = 7.5
+        
+        return $0
+    }(UIView())
+    
+    lazy var middleBoundCircle: UIView = {
+        $0.translatesAutoresizingMaskIntoConstraints = false
+        $0.backgroundColor = self.slider.value >= 50 ? UIColor(hex: "#f088c7") : .systemGray5
+        $0.clipsToBounds = true
+        $0.layer.cornerRadius = 7.5
+        
+        return $0
+    }(UIView())
+    
+    lazy var higherBoundCircle: UIView = {
+        $0.translatesAutoresizingMaskIntoConstraints = false
+        $0.backgroundColor = .systemGray5
+        $0.clipsToBounds = true
+        $0.layer.cornerRadius = 7.5
+        
+        return $0
+    }(UIView())
 
     override init(frame: CGRect) {
         super.init(frame: frame)
         
-        containerView.addSubview(titleLabel)
-        containerView.addSubview(slider)
-        containerView.addSubview(fanSpeedLabels)
+        
+        [titleLabel, fanSpeedLabels, lowerBoundCircle, middleBoundCircle, higherBoundCircle, slider].forEach {
+            containerView.addSubview($0)
+        }
         
         shadowView.addSubview(containerView)
         
@@ -108,6 +143,21 @@ class CustomSliderViewWithSteps: UIView {
             slider.leadingAnchor.constraint(equalTo: titleLabel.leadingAnchor),
             slider.trailingAnchor.constraint(equalTo: titleLabel.trailingAnchor),
             slider.heightAnchor.constraint(equalToConstant: 40),
+            
+            lowerBoundCircle.widthAnchor.constraint(equalToConstant: 15),
+            lowerBoundCircle.heightAnchor.constraint(equalToConstant: 15),
+            lowerBoundCircle.centerYAnchor.constraint(equalTo: slider.centerYAnchor, constant: 1),
+            lowerBoundCircle.leadingAnchor.constraint(equalTo: slider.leadingAnchor),
+            
+            middleBoundCircle.widthAnchor.constraint(equalToConstant: 15),
+            middleBoundCircle.heightAnchor.constraint(equalToConstant: 15),
+            middleBoundCircle.centerYAnchor.constraint(equalTo: slider.centerYAnchor, constant: 1),
+            middleBoundCircle.centerXAnchor.constraint(equalTo: slider.centerXAnchor),
+            
+            higherBoundCircle.widthAnchor.constraint(equalToConstant: 15),
+            higherBoundCircle.heightAnchor.constraint(equalToConstant: 15),
+            higherBoundCircle.centerYAnchor.constraint(equalTo: slider.centerYAnchor, constant: 1),
+            higherBoundCircle.trailingAnchor.constraint(equalTo: slider.trailingAnchor),
             
             fanSpeedLabels.topAnchor.constraint(equalTo: slider.bottomAnchor, constant: 10),
             fanSpeedLabels.leadingAnchor.constraint(equalTo: slider.leadingAnchor),
@@ -135,20 +185,20 @@ class CustomSliderViewWithSteps: UIView {
         shadowView.layer.rasterizationScale = UIScreen.main.scale
     }
     
-    @objc func sliderValueDidChange(_ sender: UISlider!) {
-        if sender.value >= 0 && sender.value <= 50 {
-            DispatchQueue.main.async {
-                UIView.animate(withDuration: 0.5) {
-                    self.slider.setValue(sender.value >= 25 ? 50.0 : 0.0, animated: true)
+    @objc func sliderValueDidChange(slider: UISlider, event: UIEvent) {
+        self.middleBoundCircle.backgroundColor = slider.value >= 2 ? UIColor(hex: "#f088c7") : .systemGray5
+        if let touchEvent = event.allTouches?.first {
+                switch touchEvent.phase {
+                case .began:
+                    return
+                case .moved:
+                    return
+                case .ended:
+                    self.slider.setValue(roundf(slider.value), animated: true)
+                default:
+                    break
                 }
             }
-        } else {
-            DispatchQueue.main.async {
-                UIView.animate(withDuration: 0.5) {
-                    self.slider.setValue(sender.value >= 75 ? 100.0 : 50.0, animated: true)
-                }
-            }
-        }
     }
     
     required init?(coder: NSCoder) {

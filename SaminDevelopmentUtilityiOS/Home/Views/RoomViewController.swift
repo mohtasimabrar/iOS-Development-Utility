@@ -86,7 +86,7 @@ class RoomViewController: UIViewController {
             selectionBarShade.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             selectionBarShade.heightAnchor.constraint(equalToConstant: 2),
             
-            controlCollectionView.topAnchor.constraint(equalTo: topMenuCollectionView.bottomAnchor, constant: 5),
+            controlCollectionView.topAnchor.constraint(equalTo: selectionBarShade.bottomAnchor),
             controlCollectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             controlCollectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             controlCollectionView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
